@@ -123,4 +123,47 @@ int recursive_ternary_search( temp vec[], int l, int r, temp target ){
     return -1;
 }
 
+template <class temp>
+int fibonacci_search(  temp vec[], int l, int r, temp target  ){
+    int fib_n, fib_nm1, fib_nm2;
+    int mf;
+    
+    fib_nm2 = 1;
+    fib_nm1 = 1;
+    fib_n = 2;
+
+    if( vec[l] == target ) return l;
+
+    while( fib_n < r+1 ){
+        fib_nm2 = fib_nm1;
+        fib_nm1 = fib_n;
+        fib_n = fib_nm1 + fib_nm2;
+    }
+
+    while( fib_nm2 >= 1 ){
+        mf = std::min( l + fib_nm2, r );
+
+        if( vec[mf] == target ){
+            return mf;
+        }
+        else if( vec[mf] < target ){
+            l = mf;
+
+            fib_n = fib_nm1;
+            fib_nm1 = fib_nm2;
+            fib_nm2 = fib_n - fib_nm1;
+
+        }
+        else{
+
+            fib_n = fib_nm2;
+            fib_nm1 = fib_nm1 - fib_nm2;
+            fib_nm2 = fib_n - fib_nm1;
+
+        }
+    }
+
+    return -1;
+}
+
 #endif
